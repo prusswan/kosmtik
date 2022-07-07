@@ -9,7 +9,10 @@ class Tile {
         this.z = +z;
         this.x = +x;
         this.y = +y;
-        this.projection = new mapnik.Projection(options.projection || Tile.DEFAULT_OUTPUT_PROJECTION);
+        //this.projection = new mapnik.Projection(options.projection || Tile.DEFAULT_OUTPUT_PROJECTION);
+        this.merc = new mapnik.Projection(options.projection || "epsg:3857" || Tile.DEFAULT_OUTPUT_PROJECTION);
+        var wgs84 = new mapnik.Projection("epsg:4326");
+        this.projection = new mapnik.ProjTransform(wgs84, this.merc);
         this.scale = options.scale || 1;  // When the tile coverage gets bigger (1024px…) or for metatile.
         this.mapScale = options.mapScale;  // Retina.
         this.height = options.height || options.size || DEFAULT_HEIGHT;

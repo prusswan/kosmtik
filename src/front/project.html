@@ -10,7 +10,24 @@
   <div id='map' class="sidebar-map"></div>
 
   <script type="text/javascript">
+    L.GridLayer.GridDebug = L.GridLayer.extend({
+      createTile: function (coords) {
+        const tile = document.createElement('div');
+        tile.style.outline = '0.5px dashed green';
+        tile.style.fontWeight = 'bold';
+        tile.style.fontSize = '10pt';
+        tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+        return tile;
+      },
+    });
+
+    L.gridLayer.gridDebug = function (opts) {
+      return new L.GridLayer.GridDebug(opts);
+    };
+
     var map = new L.Kosmtik.Map();
+
+    map.addLayer(L.gridLayer.gridDebug());
   </script>
 </body>
 </html>
